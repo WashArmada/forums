@@ -204,7 +204,7 @@ return `${admin}<div class="panel"><div class="ph">Lua Scripts (${list.length})<
 function updatesPage(){
 const admin=isAdmin()?`<div class="panel"><div class="ph">Post Update</div><div class="pb"><label>Version / Title</label><input id="uTitle"><label>Notes</label><textarea id="uBody" style="min-height:90px;font-family:inherit"></textarea><a class="btn" data-act="addupdate">Post</a></div></div>`:"";
 const list=updates();
-return `${admin}<div class="panel"><div class="ph">Updates &amp; Changelog</div><div class="pb">${list.map(u=>`<div class="post"><div class="row between"><h3>esc(u.title)</h3>{isAdmin()&&u.local?`<a class="btn sm alt" data-del="u:${u.id}">Delete</a>`:""}</div><div class="meta"><span class="badge b">Update</span>fmt(u.time)</div><p>{esc(u.body)}</p></div>`).join("")||'<div class="empty">No updates yet.</div>'}</div></div>`;)
+return `${admin}<div class="panel"><div class="ph">Updates &amp; Changelog</div><div class="pb">${list.map(u=>`<div class="post"><div class="row between"><h3>esc(u.title)</h3>{isAdmin()&&u.local?`<a class="btn sm alt" data-del="u:${u.id}">Delete</a>`:""}</div><div class="meta"><span class="badge b">Update</span>fmt(u.time)</div><p>{esc(u.body)}</p></div>`).join("")||'<div class="empty">No updates yet.</div>'}</div></div>`;
 }
 
 function membersPage(){
