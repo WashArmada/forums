@@ -192,8 +192,9 @@ if(sortBy==="old")list.sort((a,b)=>a.time-b.time);
 if(sortBy==="views")list.sort((a,b)=>(v[b.id]||0)-(v[a.id]||0));
 if(sortBy==="az")list.sort((a,b)=>a.title.localeCompare(b.title));
 const canView=!CONFIG.membersOnly||!!me;
-// MODIFICATION : Autorise l'upload à tous les membres connectés (!!me) au lieu de l'admin seul (isAdmin)
-const admin=!!me?`<div class="panel"><div class="ph">Upload Script</div><div class="pb"><div class="grid" style="gap:10px"><div><label>Title</label><input id="sTitle"></div><div><label>Game</label><input id="sGame" placeholder="Universal"></div></div><label>Description</label><input id="sDesc"><label>Tags (comma separated)</label><input id="sTags" placeholder="autofarm, gui, keyless"><label>Lua Code</label><textarea id="sCode" spellcheck="false"></textarea><div class="row"><a class="btn" data-act="addscript">Publish</a><label class="btn alt" style="margin:0">Load .lua file<input type="file" id="sFile" accept=".lua,.txt" hidden></label><a class="btn alt" data-act="export">Export data.json</a></div><div class="sub" style="margin-top:8px">Posts save in this browser. Export data.json and commit it next to index.html to publish for everyone.</div></div></div>`:"";
+
+const admin=!!me?`<div class="panel"><div class="ph">Upload Script</div><div class="pb"><div class="grid" style="gap:10px"><div><label>Title</label><input id="sTitle"></div><div><label>Game</label><input id="sGame" placeholder="Universal"></div></div><label>Description</label><input id="sDesc"><label>Tags (comma separated)</label><input id="sTags" placeholder="autofarm, gui, keyless"><label>Lua Code</label><textarea id="sCode" spellcheck="false"></textarea><div class="row"><a class="btn" data-act="addscript">Publish</a><label class="btn alt" style="margin:0">Load .lua file<input type="file" id="sFile" accept=".lua,.txt" hidden></label><a class="btn alt" data-act="export">Export data.json</a></div><div class="sub" style="margin-top:8px">Posts save in this browser. Export data.json and commit it next to index.html to publish for everyone.</div></div></div>`:`<div class="panel"><div class="pb empty">Please <a data-go="login">Login</a> to share or upload scripts.</div></div>`;
+
 const rows=list.map(s=>{
 const code=openCode[s.id];
 return `<div class="post"><div class="row between"><h3>${esc(s.title)}</h3><div class="row">${canView?`<a class="btn sm" data-copy="\${s.id}">Copy</a><a class="btn sm alt" data-dl="\${s.id}">Download</a><a class="btn sm alt" data-toggle="s.id">{code?"Hide":"View"}</a>`:'<a class="btn sm" data-go="login">Login to access</a>'}${isAdmin()&&s.local?`<a class="btn sm alt" data-del="s:\${s.id}">Delete</a>`:""}</div></div><div class="meta"><span class="badge d">${esc(s.game||"Universal")}</span>${esc(s.desc||"")} - ${fmt(s.time)} - ${v[s.id]||0} views</div><div>${(s.tags||[]).map(t=>`<span class="tag" data-tag="esc(t)">{esc(t)}</span>`).join("")}</div>${canView&&code?`<pre>\${esc(s.code)}</pre>`:""}</div>`}).join("");
@@ -221,16 +222,19 @@ if(!adminT&&!acc)return '<div class="panel"><div class="pb empty">User not found
 const posts=ls("waShouts",[]).filter(s=>s.u.toLowerCase()===target.toLowerCase()).length;
 const own=!!me&&me.toLowerCase()===target.toLowerCase();
 const pw=own?`<div class="panel"><div class="ph">Change Password</div><div class="pb" style="max-width:400px"><label>Current password</label><input id="cp" type="password"><label>New password</label><input id="np" type="password"><div class="err" id="pErr"></div><a class="btn" data-act="chpw">Update</a>${adminT?"":' <a class="btn alt" data-act="delacc">Delete account</a>'}</div></div>`:"";
-return `<div class="panel"><div class="ph">Profile</div><div class="pb"><div class="prof"><div class="av">${esc(target[0].toUpperCase())}</div><div><div class="tt" style="font-size:20px">${esc(adminT?CONFIG.adminUser:acc.name)}</div><div class="sub">${adminT?'<span class="badge">Admin</span>Founder':'<span class="badge d">Member</span>Joined '+fmt(acc.joined)}</div></div></div><div class="stat"><div><b>${posts}</b>Shouts</div><div><b>${adminT?"Staff":"Member"}</b>Rank</div></div></div></div>${pw}`;
+return `<div class="panel"><div class="ph">Profile</div><div class="pb"><div class="prof"><div class="av">${esc(target.toUpperCase())}</div><div><div class="tt" style="font-size:20px">${esc(adminT?CONFIG.adminUser:acc.name)}</div><div class="sub">${adminT?'<span class="badge">Admin</span>Founder':'<span class="badge d">Member</span>Joined '+fmt(acc.joined)}</div></div></div><div class="stat"><div><b>${posts}</b>Shouts</div><div><b>${adminT?"Staff":"Member"}</b>Rank</div></div></div></div>${pw}`;
 }
 
 function loginPage(){
 return `<div class="panel auth"><div class="ph">Login</div><div class="pb"><label>Username</label><input id="lUser" autocomplete="username"><label>Password</label><div class="pw"><input id="lPass" type="password" autocomplete="current-password"><a data-show="lPass">show</a></div><div class="err" id="lErr"></div><a class="btn" data-act="login">Login</a><div class="sub" style="margin-top:10px">No account? <a data-go="register">Register here</a>.</div></div></div>`;
 }
 
-function registerPage(){
-return `<div class="panel auth"><div class="ph">Create Account</div><div class="pb"><label>Username</label><input id="rUser" autocomplete="username" maxlength="20"><div class="hint">3 to 20 letters, numbers or underscores.</div><label>Password</label><div class="pw"><input id="rPass" type="password" autocomplete="new-password"><a data-show="rPass">show</a></div><div class="meter"><div id="meter"></div></div><div class="hint" id="mtext">At least 6 characters.</div><label>Confirm Password</label><input id="rPass2" type="password" autocomplete="new-password"><div class="err" id="rErr"></div><a class="btn" data-act="register">Create Account</a><div class="sub" style="margin-top:10px">Already registered? <a data-go="login">Login</a>.</div></div></div>`;
+function render(){
+nav();
+const p={home:homePage,scripts:scriptsPage,updates:updatesPage,members:membersPage,profile:()=>profilePage(),login:loginPage};
+\$("#view").innerHTML=(p[page]||homePage)();
 }
+
 
 function render(){
 nav();
