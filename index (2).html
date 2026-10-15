@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Secret Agency Forums</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0b0b0d;color:#c9c9cf;font:13px "Segoe UI",Inter,Verdana,Arial,sans-serif}
+a{color:#ff4d4d;text-decoration:none;cursor:pointer}
+a:hover{text-decoration:underline}
+#wrap{max-width:1040px;margin:0 auto;padding:0 10px 30px}
+#top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:8px 0;font-size:12px;color:#7d7d86}
+#banner{background:radial-gradient(ellipse at 12% 0%,#3d0909 0%,#140404 55%,#0b0b0d 100%);border:1px solid #3a0f0f;border-bottom:0;padding:30px 24px}
+.logo{font:800 44px/1 "Segoe UI",Inter,Arial,sans-serif;letter-spacing:-1.5px;color:#fff}
+.logo b{background:linear-gradient(90deg,#ff5a5a,#c21d1d);-webkit-background-clip:text;background-clip:text;color:transparent}
+.logo i{font-style:normal;font-weight:400;color:#8a8a8a;margin:0 6px}
+.logo em{font-style:normal;font-weight:600;color:#e6e6e6;letter-spacing:-1px}
+.logo small{display:block;margin-top:12px;color:#a05555;font:700 11px "Segoe UI",Inter,Arial,sans-serif;letter-spacing:4px;text-transform:uppercase}
+#nav{background:linear-gradient(#8b1111,#5a0a0a);border:1px solid #3a0f0f;display:flex;flex-wrap:wrap}
+#nav a{color:#f3d6d6;padding:11px 18px;font:700 13px "Segoe UI",Inter,Arial,sans-serif;letter-spacing:.3px;border-right:1px solid #450808}
+#nav a:hover,#nav a.on{background:#b01818;color:#fff;text-decoration:none}
+#nav .sp{flex:1}
+#ann{background:#1d0b0b;border:1px solid #4a1515;border-top:0;padding:8px 14px;color:#e8a8a8;font-size:12px}
+.panel{background:#141417;border:1px solid #26262b;margin-top:12px}
+.ph{background:linear-gradient(#7d1010,#560909);color:#fff;font:700 13px "Segoe UI",Inter,Arial,sans-serif;letter-spacing:.3px;padding:9px 12px;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.pb{padding:14px}
+.grid{display:grid;grid-template-columns:2fr 1fr;gap:12px}
+@media(max-width:800px){.grid{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse}
+th{background:#1b1b1f;color:#8b8b94;font-weight:700;font-size:11px;text-align:left;padding:7px 10px;border-bottom:1px solid #26262b;text-transform:uppercase;letter-spacing:.5px}
+td{padding:10px;border-bottom:1px solid #1f1f23;vertical-align:middle}
+tr:nth-child(even) td{background:#111114}
+td.ic{width:34px;text-align:center}
+td.st{width:100px;text-align:center;color:#8b8b94}
+.dot{display:inline-block;width:10px;height:10px;background:#b01818;border-radius:2px;box-shadow:0 0 6px #7d1010}
+.tt{font-weight:700;font-size:14px}
+.sub{color:#80808a;font-size:11px;margin-top:2px}
+.badge{display:inline-block;background:#b01818;color:#fff;font-size:10px;font-weight:800;padding:1px 7px;border-radius:2px;margin-right:4px;letter-spacing:.3px}
+.badge.g{background:#2d6a2d}.badge.b{background:#2a4d8a}.badge.d{background:#33333a;color:#bbb}
+input,textarea,select{background:#09090b;color:#e0e0e6;border:1px solid #33333a;padding:8px 10px;font:inherit;width:100%;margin:3px 0 10px;border-radius:2px}
+textarea{min-height:150px;font-family:Consolas,Menlo,monospace;font-size:12px}
+input:focus,textarea:focus,select:focus{outline:0;border-color:#b01818}
+label{font-weight:700;font-size:12px;color:#aaa}
+.btn{background:linear-gradient(#b01818,#7d1010);color:#fff;border:1px solid #440000;padding:7px 15px;font:700 12px "Segoe UI",Inter,Arial,sans-serif;cursor:pointer;border-radius:2px;display:inline-block}
+.btn:hover{background:#c91f1f;text-decoration:none}
+.btn.alt{background:linear-gradient(#34343a,#25252a);border-color:#44444a;color:#ccc}
+.btn.sm{padding:3px 10px;font-size:11px}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.between{justify-content:space-between}
+pre{background:#060607;border:1px solid #26262b;color:#9fe3c8;padding:10px;overflow:auto;max-height:320px;margin:8px 0 0;font:12px Consolas,Menlo,monospace}
+.auth{max-width:400px;margin:0 auto}
+.err{color:#ff6b6b;min-height:18px;font-weight:700;margin-bottom:6px}
+.pw{position:relative}
+.pw a{position:absolute;right:10px;top:11px;font-size:11px;color:#999}
+.meter{height:5px;background:#222;margin:-4px 0 4px;border-radius:3px;overflow:hidden}
+.meter div{height:100%;width:0;background:#c21d1d;transition:width .2s,background .2s}
+.hint{font-size:11px;color:#80808a;margin-bottom:10px;min-height:14px}
+.post{border-bottom:1px solid #222226;padding:14px 0}
+.post:last-child{border:0}
+.post h3{margin:0;font:800 16px "Segoe UI",Inter,Arial,sans-serif;color:#fff}
+.meta{color:#80808a;font-size:11px;margin:4px 0}
+.post p{margin:6px 0 0;white-space:pre-wrap;line-height:1.5}
+.empty{text-align:center;color:#6a6a72;padding:26px}
+.tag{display:inline-block;background:#1f1f24;border:1px solid #33333a;color:#aaa;padding:1px 8px;font-size:11px;border-radius:10px;margin:2px 3px 0 0;cursor:pointer}
+.tag:hover,.tag.on{border-color:#b01818;color:#fff}
+.tools{display:flex;gap:8px;flex-wrap:wrap}
+.tools input{flex:2;margin:0}.tools select{flex:1;margin:0}
+.av{width:72px;height:72px;background:linear-gradient(135deg,#c21d1d,#4a0808);display:flex;align-items:center;justify-content:center;font:800 32px "Segoe UI",Inter,Arial,sans-serif;color:#fff;border-radius:4px;flex:none}
+.avimg{border-radius:4px;object-fit:cover;display:block;flex:none}
+.prof{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+.stat{display:flex;gap:18px;flex-wrap:wrap;margin-top:6px}
+.stat div{background:#0f0f12;border:1px solid #26262b;padding:8px 14px;min-width:90px}
+.stat b{display:block;font:800 20px "Segoe UI",Inter,Arial,sans-serif;color:#fff}
+.shout{max-height:260px;overflow:auto;margin-bottom:10px}
+.shout div{padding:5px 0;border-bottom:1px solid #1d1d21;word-break:break-word}
+.shout span{color:#666;font-size:10px;margin-left:6px}
+.postrow{display:grid;grid-template-columns:160px 1fr;border-bottom:1px solid #222226}
+.pu{background:#101013;padding:14px 10px;text-align:center;border-right:1px solid #222226;display:flex;flex-direction:column;align-items:center;gap:4px}
+.pc{padding:12px 14px;min-width:0}
+.pc p{margin:8px 0 0;white-space:pre-wrap;line-height:1.55;word-break:break-word}
+.sig{border-top:1px dashed #2a2a30;margin-top:14px;padding-top:6px;color:#80808a;font-size:11px}
+.crumb{font-size:12px;color:#80808a;margin-top:12px}
+.key{font:700 15px Consolas,Menlo,monospace;letter-spacing:2px;background:#09090b;border:1px solid #33333a;padding:10px;word-break:break-all;color:#ffd27a;margin:8px 0}
+.qr{background:#fff;padding:8px;width:196px;height:196px;display:block;margin:8px 0}
+.hidden{display:none}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#b01818;color:#fff;padding:9px 18px;font-weight:700;opacity:0;pointer-events:none;transition:opacity .2s;border-radius:2px;z-index:9}
+#toast.show{opacity:1}
+#foot{margin-top:18px;color:#55555c;font-size:11px;text-align:center}
+@media(max-width:640px){td.st,th.st{display:none}.logo{font-size:28px}#nav a{padding:9px 12px;font-size:12px}.postrow{grid-template-columns:1fr}.pu{flex-direction:row;border-right:0;border-bottom:1px solid #222226;justify-content:flex-start;padding:8px 12px}}
+</style>
+</head>
+<body>
+<div id="wrap">
+<div id="top"><div id="welcome"></div><div id="clock"></div></div>
+<div id="banner"><div class="logo"><b>The Secret</b><i>-</i><em>Softworks</em><small>Script And Washiez Chaos</small></div></div>
+<div id="nav"></div>
+<div id="ann"></div>
+<div id="view"></div>
+<div id="foot">Washiez Armada &copy; <span id="yr"></span>. Not affiliated with Roblox Corporation.</div>
+</div>
+<div id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+const CONFIG={
+supabaseUrl:"https://YOUR-PROJECT.supabase.co",
+supabaseKey:"YOUR-ANON-KEY",
+announcement:"Welcome To The Secret Society Forums! You are not ssupposed to be here.",
+boards:[
+{id:"general",name:"General Discussion",desc:"Talk about anything related to the community."},
+{id:"help",name:"Script Help and Support",desc:"Ask questions and get help with scripts."},
+{id:"requests",name:"Requests and Suggestions",desc:"Suggest new scripts and features."},
+{id:"off",name:"Off Topic",desc:"Everything else."}
+],
+links:[
+{type:"Discord",cls:"",name:"Join our Discord",desc:"Support, announcements and chat.",url:"https://discord.gg/yourinvite"},
+{type:"Roblox",cls:"g",name:"Roblox Group",desc:"Join the official group.",url:"https://www.roblox.com/groups/0000000"},
+{type:"Roblox",cls:"g",name:"Our Game",desc:"Play on Roblox.",url:"https://www.roblox.com/games/0000000"},
+{type:"Social",cls:"b",name:"YouTube",desc:"Showcases and tutorials.",url:"https://youtube.com/@yourchannel"}
+]
+};
+
+const configured=!/YOUR-/.test(CONFIG.supabaseUrl+CONFIG.supabaseKey)&&!!window.supabase;
+const sb=configured?window.supabase.createClient(CONFIG.supabaseUrl,CONFIG.supabaseKey):null;
+const $=s=>document.querySelector(s);
+
+let page="home",filterTag="",query="",sortBy="new",curBoard="",curThread="",viewUser=null,showNew=false;
+let me=null,pending=false,enroll=null,openCode={},scriptCache=null,rtok=0;
+
+function esc(t){const d=document.createElement("div");d.textContent=t==null?"":String(t);return d.innerHTML}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove("show"),2400)}
+function fmt(ts){return new Date(ts).toLocaleDateString(undefined,{year:"numeric",month:"short",day:"numeric"})}
+function ago(ts){const s=(Date.now()-new Date(ts).getTime())/1000;if(s<60)return"just now";if(s<3600)return Math.floor(s/60)+"m ago";if(s<86400)return Math.floor(s/3600)+"h ago";return Math.floor(s/86400)+"d ago"}
+function isAdmin(){return !!me&&me.role==="admin"}
+function safePfp(p){return typeof p==="string"&&/^data:image\/(jpeg|png|webp);base64,[A-Za-z0-9+\/=]+$/.test(p)}
+function nm(a){return a&&a.username?a.username:"unknown"}
+async function db(p){const r=await p;if(r.error)throw r.error;return r.data}
+async function cnt(t,col,val){let q=sb.from(t).select("*",{count:"exact",head:true});if(col)q=q.eq(col,val);const r=await q;return r.count||0}
+function strength(p){let s=0;if(p.length>=6)s++;if(p.length>=10)s++;if(/[a-z]/.test(p)&&/[A-Z]/.test(p))s++;if(/\d/.test(p))s++;if(/[^A-Za-z0-9]/.test(p))s++;return s}
+
+function avatar(a,size){
+if(a&&safePfp(a.pfp))return `<img class="avimg" alt="" src="${a.pfp}" style="width:${size}px;height:${size}px">`;
+return `<div class="av" style="width:${size}px;height:${size}px;font-size:${Math.round(size*.45)}px">${esc(nm(a)[0].toUpperCase())}</div>`;
+}
+function userCard(a){
+return `<div class="pu">${avatar(a,72)}<a class="tt" data-user="${esc(nm(a))}">${esc(nm(a))}</a><div>${a&&a.role==="admin"?'<span class="badge">Admin</span>':'<span class="badge d">Member</span>'}</div><div class="sub">Joined ${a?fmt(a.created_at):"-"}</div></div>`;
+}
+
+function nav(){
+const items=[["home","Home"],["forums","Forums"],["scripts","Scripts"],["updates","Updates"],["members","Members"]];
+const on=i=>page===i||(i==="forums"&&(page==="board"||page==="thread"));
+let h=items.map(i=>`<a data-go="${i[0]}" class="${on(i[0])?"on":""}">${i[1]}</a>`).join("")+'<span class="sp"></span>';
+h+=me?`<a data-go="myprofile" class="${page==="profile"?"on":""}">My Profile</a><a data-go="settings" class="${page==="settings"?"on":""}">Settings</a><a data-act="logout">Logout</a>`:`<a data-go="login" class="${page==="login"?"on":""}">Login</a><a data-go="register" class="${page==="register"?"on":""}">Register</a>`;
+$("#nav").innerHTML=h;
+$("#welcome").innerHTML=me?`Logged in as <b style="color:#ff4d4d">${esc(me.username)}</b>${isAdmin()?' <span class="badge">Admin</span>':""}`:"Welcome, Guest. Please login or register.";
+$("#ann").textContent=CONFIG.announcement;
+$("#ann").classList.toggle("hidden",!CONFIG.announcement);
+}
+
+function setupPage(){
+return `<div class="panel"><div class="ph">Backend not connected</div><div class="pb"><p>Open <b>index.html</b> and fill in <b>supabaseUrl</b> and <b>supabaseKey</b> in the CONFIG block at the top of the script. Then run <b>supabase.sql</b> in your Supabase SQL editor.</p></div></div>`;
+}
+
+async function homePage(){
+const [sc,up,sh,cm,cs,cu,ct]=await Promise.all([
+db(sb.from("scripts").select("id,title,game,created_at").order("created_at",{ascending:false}).limit(4)),
+db(sb.from("updates").select("id,title,created_at").order("created_at",{ascending:false}).limit(3)),
+db(sb.from("shouts").select("id,body,created_at,author:profiles(username)").order("created_at",{ascending:false}).limit(40)),
+cnt("profiles"),cnt("scripts"),cnt("updates"),cnt("threads")]);
+const links=`<div class="panel"><div class="ph">Community</div><table><tr><th></th><th>Link</th><th class="st">Type</th></tr>${CONFIG.links.map(l=>`<tr><td class="ic"><span class="dot"></span></td><td><a class="tt" href="${esc(l.url)}" target="_blank" rel="noopener noreferrer">${esc(l.name)}</a><div class="sub">${esc(l.desc)}</div></td><td class="st"><span class="badge ${l.cls}">${esc(l.type)}</span></td></tr>`).join("")}</table></div>`;
+const latest=sc.map(x=>`<tr><td class="ic"><span class="dot"></span></td><td><a class="tt" data-go="scripts">${esc(x.title)}</a><div class="sub">${esc(x.game||"Universal")} - ${ago(x.created_at)}</div></td></tr>`).join("")||'<tr><td class="empty">Nothing yet.</td></tr>';
+const lu=up.map(x=>`<tr><td class="ic"><span class="dot"></span></td><td><a class="tt" data-go="updates">${esc(x.title)}</a><div class="sub">${ago(x.created_at)}</div></td></tr>`).join("")||'<tr><td class="empty">Nothing yet.</td></tr>';
+const shouts=sh.slice().reverse().map(s=>`<div><a data-user="${esc(nm(s.author))}"><b>${esc(nm(s.author))}</b></a>: ${esc(s.body)}<span>${ago(s.created_at)}</span></div>`).join("")||'<div class="sub">No messages yet.</div>';
+const shoutBox=`<div class="panel"><div class="ph">Shoutbox${isAdmin()?'<a class="btn sm alt" data-act="clearshouts">Clear</a>':""}</div><div class="pb"><div class="shout">${shouts}</div>${me?'<div class="row"><input id="shoutIn" maxlength="160" placeholder="Say something..." style="flex:1;margin:0"><a class="btn" data-act="shout">Send</a></div>':'<div class="sub">Login to chat.</div>'}</div></div>`;
+return `<div class="grid"><div>${links}<div class="panel"><div class="ph">Latest Scripts<a class="btn sm alt" data-go="scripts">View all</a></div><table>${latest}</table></div><div class="panel"><div class="ph">Latest Updates<a class="btn sm alt" data-go="updates">View all</a></div><table>${lu}</table></div></div><div>${shoutBox}<div class="panel"><div class="ph">Statistics</div><div class="pb"><div class="stat"><div><b>${cm}</b>Members</div><div><b>${ct}</b>Threads</div><div><b>${cs}</b>Scripts</div><div><b>${cu}</b>Updates</div></div></div></div></div></div>`;
+}
+
+async function forumsPage(){
+const ts=await db(sb.from("threads").select("id,board,title,last_activity,author:profiles(username),posts(count)"));
+const rows=CONFIG.boards.map(b=>{
+const l=ts.filter(t=>t.board===b.id),rc=l.reduce((n,t)=>n+((t.posts&&t.posts[0]&&t.posts[0].count)||0),0);
+const last=l.slice().sort((x,y)=>new Date(y.last_activity)-new Date(x.last_activity))[0];
+return `<tr><td class="ic"><span class="dot"></span></td><td><a class="tt" data-board="${b.id}">${esc(b.name)}</a><div class="sub">${esc(b.desc)}</div></td><td class="st">${l.length}</td><td class="st">${rc}</td><td class="st" style="width:170px;text-align:left">${last?`<a data-thread="${last.id}">${esc(last.title.slice(0,24))}</a><div class="sub">${ago(last.last_activity)}</div>`:'<span class="sub">No posts</span>'}</td></tr>`;
+}).join("");
+return `<div class="panel"><div class="ph">Forums</div><table><tr><th></th><th>Board</th><th class="st">Threads</th><th class="st">Replies</th><th class="st" style="width:170px">Last post</th></tr>${rows}</table></div>`;
+}
+
+async function boardPage(){
+const b=CONFIG.boards.find(x=>x.id===curBoard);
+if(!b)return forumsPage();
+const list=await db(sb.from("threads").select("id,title,pinned,locked,views,created_at,last_activity,author:profiles(username),posts(count)").eq("board",b.id).order("pinned",{ascending:false}).order("last_activity",{ascending:false}));
+const form=showNew&&me?`<div class="pb" style="border-bottom:1px solid #26262b"><label>Title</label><input id="ntTitle" maxlength="100"><label>Message</label><textarea id="ntBody" maxlength="5000" style="font-family:inherit"></textarea><div class="row"><a class="btn" data-act="newthread">Post Thread</a><a class="btn alt" data-act="togglenew">Cancel</a></div></div>`:"";
+const rows=list.map(t=>`<tr><td class="ic"><span class="dot"></span></td><td>${t.pinned?'<span class="badge">Pinned</span>':""}${t.locked?'<span class="badge d">Locked</span>':""}<a class="tt" data-thread="${t.id}">${esc(t.title)}</a><div class="sub">by <a data-user="${esc(nm(t.author))}">${esc(nm(t.author))}</a> - ${fmt(t.created_at)}</div></td><td class="st">${(t.posts&&t.posts[0]&&t.posts[0].count)||0}</td><td class="st">${t.views}</td><td class="st" style="width:130px">${ago(t.last_activity)}</td></tr>`).join("");
+return `<div class="crumb"><a data-go="forums">Forums</a> / ${esc(b.name)}</div><div class="panel"><div class="ph">${esc(b.name)}${me?'<a class="btn sm" data-act="togglenew">New Thread</a>':'<a class="btn sm alt" data-go="login">Login to post</a>'}</div>${form}<table><tr><th></th><th>Thread</th><th class="st">Replies</th><th class="st">Views</th><th class="st" style="width:130px">Last activity</th></tr>${rows||'<tr><td colspan="5" class="empty">No threads yet. Be the first to post.</td></tr>'}</table></div>`;
+}
+
+async function threadPage(){
+const sel="*,author:profiles(id,username,role,pfp,sig,created_at)";
+const t=await db(sb.from("threads").select(sel).eq("id",curThread).maybeSingle());
+if(!t)return forumsPage();
+const ps=await db(sb.from("posts").select(sel).eq("thread_id",t.id).order("created_at"));
+const b=CONFIG.boards.find(x=>x.id===t.board)||{name:"Forum"};
+const all=[{id:"op",author:t.author,body:t.body,created_at:t.created_at}].concat(ps);
+const rows=all.map(p=>`<div class="postrow">${userCard(p.author)}<div class="pc"><div class="row between meta"><span>${p.id==="op"?"Thread started":"Reply"} ${fmt(p.created_at)} (${ago(p.created_at)})</span>${isAdmin()&&p.id!=="op"?`<a class="btn sm alt" data-act="delreply" data-id="${p.id}">Delete</a>`:""}</div><p>${esc(p.body)}</p>${p.author&&p.author.sig?`<div class="sig">${esc(p.author.sig)}</div>`:""}</div></div>`).join("");
+const mod=isAdmin()?`<a class="btn sm alt" data-act="pin">${t.pinned?"Unpin":"Pin"}</a><a class="btn sm alt" data-act="lock">${t.locked?"Unlock":"Lock"}</a><a class="btn sm alt" data-act="delthread">Delete</a>`:"";
+const reply=t.locked?'<div class="pb sub">This thread is locked.</div>':me?`<div class="pb"><label>Reply</label><textarea id="rbody" maxlength="5000" style="font-family:inherit;min-height:110px"></textarea><a class="btn" data-act="reply">Post Reply</a></div>`:'<div class="pb sub">Please <a data-go="login">login</a> or <a data-go="register">register</a> to reply.</div>';
+return `<div class="crumb"><a data-go="forums">Forums</a> / <a data-board="${t.board}">${esc(b.name)}</a> / ${esc(t.title)}</div><div class="panel"><div class="ph"><span>${esc(t.title)}</span><span class="row">${mod}</span></div>${rows}${reply}</div>`;
+}
+
+async function scriptsPage(){
+if(!scriptCache)scriptCache=await db(sb.from("scripts").select("*").order("created_at",{ascending:false}));
+let list=scriptCache.slice();
+const tags=[...new Set(list.flatMap(s=>s.tags||[]))];
+if(query){const q=query.toLowerCase();list=list.filter(s=>(s.title+" "+s.description+" "+s.game+" "+(s.tags||[]).join(" ")).toLowerCase().includes(q))}
+if(filterTag)list=list.filter(s=>(s.tags||[]).includes(filterTag));
+if(sortBy==="old")list.sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
+if(sortBy==="views")list.sort((a,b)=>b.views-a.views);
+if(sortBy==="az")list.sort((a,b)=>a.title.localeCompare(b.title));
+const admin=isAdmin()?`<div class="panel"><div class="ph">Upload Script</div><div class="pb"><div class="grid" style="gap:10px"><div><label>Title</label><input id="sTitle" maxlength="100"></div><div><label>Game</label><input id="sGame" maxlength="60" placeholder="Universal"></div></div><label>Description</label><input id="sDesc" maxlength="300"><label>Tags (comma separated)</label><input id="sTags" placeholder="autofarm, gui, keyless"><label>Lua Code</label><textarea id="sCode" spellcheck="false"></textarea><div class="row"><a class="btn" data-act="addscript">Publish</a><label class="btn alt" style="margin:0">Load .lua file<input type="file" id="sFile" accept=".lua,.txt" hidden></label></div></div></div>`:"";
+const rows=list.map(s=>{
+const code=openCode[s.id];
+return `<div class="post"><div class="row between"><h3>${esc(s.title)}</h3><div class="row">${me?`<a class="btn sm" data-copy="${s.id}">Copy</a><a class="btn sm alt" data-dl="${s.id}">Download</a><a class="btn sm alt" data-toggle="${s.id}">${code!==undefined?"Hide":"View"}</a>`:'<a class="btn sm" data-go="login">Login to access</a>'}${isAdmin()?`<a class="btn sm alt" data-del="scripts:${s.id}">Delete</a>`:""}</div></div><div class="meta"><span class="badge d">${esc(s.game||"Universal")}</span>${esc(s.description)} - ${fmt(s.created_at)} - ${s.views} views</div><div>${(s.tags||[]).map(t=>`<span class="tag" data-tag="${esc(t)}">${esc(t)}</span>`).join("")}</div>${me&&code!==undefined?`<pre>${esc(code)}</pre>`:""}</div>`}).join("");
+return `${admin}<div class="panel"><div class="ph">Lua Scripts (${list.length})</div><div class="pb"><div class="tools"><input id="q" placeholder="Search scripts..." value="${esc(query)}"><select id="sort"><option value="new">Newest</option><option value="old">Oldest</option><option value="views">Most viewed</option><option value="az">A to Z</option></select></div><div style="margin-top:8px">${tags.map(t=>`<span class="tag ${filterTag===t?"on":""}" data-tag="${esc(t)}">${esc(t)}</span>`).join("")}${filterTag?'<a class="tag" data-tag="">clear</a>':""}</div>${rows||'<div class="empty">No scripts found.</div>'}</div></div>`;
+}
+
+async function updatesPage(){
+const list=await db(sb.from("updates").select("*").order("created_at",{ascending:false}));
+const admin=isAdmin()?`<div class="panel"><div class="ph">Post Update</div><div class="pb"><label>Version / Title</label><input id="uTitle" maxlength="100"><label>Notes</label><textarea id="uBody" maxlength="5000" style="min-height:90px;font-family:inherit"></textarea><a class="btn" data-act="addupdate">Post</a></div></div>`:"";
+return `${admin}<div class="panel"><div class="ph">Updates &amp; Changelog</div><div class="pb">${list.map(u=>`<div class="post"><div class="row between"><h3>${esc(u.title)}</h3>${isAdmin()?`<a class="btn sm alt" data-del="updates:${u.id}">Delete</a>`:""}</div><div class="meta"><span class="badge b">Update</span>${fmt(u.created_at)}</div><p>${esc(u.body)}</p></div>`).join("")||'<div class="empty">No updates yet.</div>'}</div></div>`;
+}
+
+async function membersPage(){
+const us=await db(sb.from("profiles").select("id,username,role,pfp,created_at").order("created_at"));
+const rows=us.map(x=>`<tr><td class="ic">${avatar(x,28)}</td><td><a class="tt" data-user="${esc(x.username)}">${esc(x.username)}</a></td><td class="st">${x.role==="admin"?'<span class="badge">Admin</span>':'<span class="badge d">Member</span>'}</td><td class="st">${fmt(x.created_at)}</td></tr>`).join("");
+return `<div class="panel"><div class="ph">Members (${us.length})</div><table><tr><th></th><th>Username</th><th class="st">Rank</th><th class="st">Joined</th></tr>${rows}</table></div>`;
+}
+
+async function profilePage(){
+const name=viewUser||(me&&me.username);
+if(!name)return loginPage();
+const p=await db(sb.from("profiles").select("*").eq("username",name).maybeSingle());
+if(!p)return '<div class="panel"><div class="pb empty">User not found.</div></div>';
+const [tc,rc,sc]=await Promise.all([cnt("threads","author_id",p.id),cnt("posts","author_id",p.id),cnt("shouts","author_id",p.id)]);
+const own=!!me&&me.id===p.id;
+return `<div class="panel"><div class="ph">Profile${own?'<a class="btn sm alt" data-go="settings">Edit Settings</a>':""}</div><div class="pb"><div class="prof">${avatar(p,96)}<div><div class="tt" style="font-size:22px">${esc(p.username)}</div><div class="sub">${p.role==="admin"?'<span class="badge">Admin</span>':'<span class="badge d">Member</span>'}Joined ${fmt(p.created_at)}</div>${p.bio?`<p style="margin:8px 0 0;white-space:pre-wrap">${esc(p.bio)}</p>`:""}</div></div><div class="stat"><div><b>${tc}</b>Threads</div><div><b>${rc}</b>Replies</div><div><b>${sc}</b>Shouts</div></div></div></div>`;
+}
+
+async function settingsPage(){
+if(!me)return loginPage();
+const f=await sb.auth.mfa.listFactors();
+const ver=(f.data&&f.data.totp)||[];
+let sec;
+if(enroll){
+sec=`<div class="sub" style="margin-bottom:6px">1. Scan this QR code with an authenticator app (Google Authenticator, Authy, Aegis, 1Password).</div><img class="qr" alt="2FA QR code" src="${esc(enroll.qr)}"><div class="sub">Cannot scan? Enter this key manually:</div><div class="key">${esc(enroll.secret)}</div><div class="sub" style="margin-bottom:6px">2. Enter the 6-digit code to confirm.</div><input id="tsetup" inputmode="numeric" maxlength="6" placeholder="123456"><div class="err" id="tsErr"></div><div class="row"><a class="btn" data-act="enable2fa">Enable 2FA</a><a class="btn alt" data-act="cancel2fa">Cancel</a></div>`;
+}else if(ver.length){
+sec=`<div class="sub" style="margin-bottom:10px"><span class="badge g">Enabled</span>Login requires a code from your authenticator app. The database also refuses posts and downloads from sessions that skipped it.</div><a class="btn alt" data-act="disable2fa" data-id="${esc(ver[0].id)}">Disable 2FA</a>`;
+}else{
+sec=`<div class="sub" style="margin-bottom:10px"><span class="badge d">Disabled</span>Protect your account with a second step at login.</div><a class="btn" data-act="setup2fa">Set up 2FA</a>`;
+}
+return `<div class="panel"><div class="ph">Profile Settings</div><div class="pb"><div class="prof">${avatar(me,96)}<div><div class="row"><label class="btn" style="margin:0">Upload picture<input type="file" id="pfpFile" accept="image/*" hidden></label>${safePfp(me.pfp)?'<a class="btn alt" data-act="rmpfp">Remove</a>':""}</div><div class="sub" style="margin-top:6px">Cropped square and resized to 128px.</div></div></div><label style="display:block;margin-top:14px">Bio</label><textarea id="bio" maxlength="200" style="min-height:70px;font-family:inherit">${esc(me.bio)}</textarea><label>Forum signature</label><input id="sig" maxlength="80" value="${esc(me.sig)}"><a class="btn" data-act="saveprofile">Save Profile</a></div></div><div class="panel"><div class="ph">Two-Factor Authentication</div><div class="pb" style="max-width:520px">${sec}</div></div><div class="panel"><div class="ph">Account</div><div class="pb" style="max-width:400px"><div class="sub" style="margin-bottom:10px">Email: ${esc(me.email)}</div><label>New password</label><input id="np" type="password" autocomplete="new-password"><div class="err" id="pErr"></div><a class="btn" data-act="chpw">Update Password</a> <a class="btn alt" data-act="delacc">Delete account</a></div></div>`;
+}
+
+function loginPage(){
+if(pending)return `<div class="panel auth"><div class="ph">Two-Factor Authentication</div><div class="pb"><div class="sub" style="margin-bottom:10px">Enter the 6-digit code from your authenticator app.</div><input id="tCode" inputmode="numeric" maxlength="6" autocomplete="one-time-code"><div class="err" id="tErr"></div><div class="row"><a class="btn" data-act="verify2fa">Verify</a><a class="btn alt" data-act="logout">Cancel</a></div></div></div>`;
+return `<div class="panel auth"><div class="ph">Login</div><div class="pb"><label>Email</label><input id="lEmail" type="email" autocomplete="username"><label>Password</label><div class="pw"><input id="lPass" type="password" autocomplete="current-password"><a data-show="lPass">show</a></div><div class="err" id="lErr"></div><a class="btn" data-act="login">Login</a><div class="sub" style="margin-top:10px">No account? <a data-go="register">Register here</a>. <a data-act="forgot">Forgot password?</a></div></div></div>`;
+}
+
+function registerPage(){
+return `<div class="panel auth"><div class="ph">Create Account</div><div class="pb"><label>Username</label><input id="rUser" autocomplete="nickname" maxlength="20"><div class="hint">3 to 20 letters, numbers or underscores.</div><label>Email</label><input id="rEmail" type="email" autocomplete="email"><label>Password</label><div class="pw"><input id="rPass" type="password" autocomplete="new-password"><a data-show="rPass">show</a></div><div class="meter"><div id="meter"></div></div><div class="hint" id="mtext">At least 6 characters.</div><label>Confirm Password</label><input id="rPass2" type="password" autocomplete="new-password"><div class="err" id="rErr"></div><a class="btn" data-act="register">Create Account</a><div class="sub" style="margin-top:10px">Already registered? <a data-go="login">Login</a>.</div></div></div>`;
+}
+
+function recoverPage(){
+return `<div class="panel auth"><div class="ph">Set New Password</div><div class="pb"><label>New password</label><input id="np" type="password" autocomplete="new-password"><div class="err" id="pErr"></div><a class="btn" data-act="setnewpw">Save Password</a></div></div>`;
+}
+
+async function render(){
+nav();
+if(!sb){$("#view").innerHTML=setupPage();return}
+const tok=++rtok;
+const p={home:homePage,forums:forumsPage,board:boardPage,thread:threadPage,scripts:scriptsPage,updates:updatesPage,members:membersPage,profile:profilePage,settings:settingsPage,login:loginPage,register:registerPage,recover:recoverPage};
+let html;
+try{html=await (p[page]||homePage)()}catch(e){html=`<div class="panel"><div class="pb empty">Something went wrong: ${esc(e.message||e)}</div></div>`}
+if(tok===rtok)$("#view").innerHTML=html;
+}
+function go(p){
+if(p==="myprofile"){viewUser=null;p="profile"}
+page=p;scriptCache=null;if(p!=="settings"&&enroll){enroll=null}
+render();window.scrollTo(0,0);
+}
+
+async function boot(){
+const s=await sb.auth.getSession();
+const session=s.data&&s.data.session;
+if(!session){me=null;pending=false;render();return}
+const a=await sb.auth.mfa.getAuthenticatorAssuranceLevel();
+if(a.data&&a.data.nextLevel==="aal2"&&a.data.currentLevel!=="aal2"){me=null;pending=true;page="login";render();return}
+pending=false;
+const p=await sb.from("profiles").select("*").eq("id",session.user.id).maybeSingle();
+me=p.data?{...p.data,email:session.user.email}:null;
+render();
+}
+
+function readPfp(f){
+if(!f||!me)return;
+const r=new FileReader();
+r.onload=()=>{
+const im=new Image();
+im.onload=async()=>{
+const c=document.createElement("canvas");c.width=c.height=128;
+const m=Math.min(im.width,im.height);
+c.getContext("2d").drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,128,128);
+const url=c.toDataURL("image/jpeg",.82);
+const r2=await sb.from("profiles").update({pfp:url}).eq("id",me.id);
+if(r2.error){toast(r2.error.message);return}
+me.pfp=url;render();toast("Picture updated");
+};
+im.onerror=()=>toast("That file is not a valid image");
+im.src=r.result;
+};
+r.readAsDataURL(f);
+}
+
+async function getCode(id){
+const r=await db(sb.from("script_code").select("code").eq("script_id",id).single());
+sb.rpc("bump_script",{sid:id}).then(()=>{});
+return r.code;
+}
+function dl(name,text){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type:"text/plain"}));a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),500)}
+
+const actions={
+async login(){
+const err=$("#lErr"),email=$("#lEmail").value.trim(),pass=$("#lPass").value;
+if(!email||!pass){err.textContent="Enter your email and password.";return}
+const r=await sb.auth.signInWithPassword({email,password:pass});
+if(r.error){err.textContent=/invalid login/i.test(r.error.message)?"Invalid email or password.":r.error.message;return}
+await boot();
+if(!pending){go("home");toast("Welcome back, "+(me?me.username:""))}
+},
+async verify2fa(){
+const err=$("#tErr"),f=await sb.auth.mfa.listFactors(),fa=f.data&&f.data.totp&&f.data.totp[0];
+if(!fa){err.textContent="No 2FA device found.";return}
+const c=await sb.auth.mfa.challenge({factorId:fa.id});
+if(c.error){err.textContent=c.error.message;return}
+const v=await sb.auth.mfa.verify({factorId:fa.id,challengeId:c.data.id,code:$("#tCode").value.trim()});
+if(v.error){err.textContent="Invalid code. Try again.";return}
+pending=false;await boot();go("home");toast("Welcome back, "+(me?me.username:""));
+},
+async register(){
+const err=$("#rErr"),u=$("#rUser").value.trim(),email=$("#rEmail").value.trim(),p=$("#rPass").value,p2=$("#rPass2").value;
+err.style.color="";
+if(!/^[A-Za-z0-9_]{3,20}$/.test(u)){err.textContent="Username must be 3 to 20 letters, numbers or underscores.";return}
+if(!/^\S+@\S+\.\S+$/.test(email)){err.textContent="Enter a valid email address.";return}
+if(p.length<6){err.textContent="Password must be at least 6 characters.";return}
+if(p!==p2){err.textContent="Passwords do not match.";return}
+const ex=await sb.from("profiles").select("id").ilike("username",u.replace(/_/g,"\\_")).limit(1);
+if(ex.data&&ex.data.length){err.textContent="That username is already taken.";return}
+const r=await sb.auth.signUp({email,password:p,options:{data:{username:u}}});
+if(r.error){err.textContent=/database/i.test(r.error.message)?"That username is not available.":r.error.message;return}
+if(r.data.session){viewUser=null;await boot();go("profile");toast("Account created. Welcome, "+u+"!")}
+else{err.style.color="#8fd18f";err.textContent="Account created. Check your email to confirm, then login."}
+},
+async logout(){await sb.auth.signOut();me=null;pending=false;enroll=null;go("home");toast("Logged out")},
+async forgot(){
+const e=prompt("Enter your account email:");if(!e)return;
+const r=await sb.auth.resetPasswordForEmail(e.trim(),{redirectTo:location.origin+location.pathname});
+toast(r.error?r.error.message:"If that email exists, a reset link was sent.");
+},
+async setnewpw(){
+const np=$("#np").value,err=$("#pErr");
+if(np.length<6){err.textContent="Password must be at least 6 characters.";return}
+const r=await sb.auth.updateUser({password:np});
+if(r.error){err.textContent=r.error.message;return}
+await boot();go("home");toast("Password updated");
+},
+async chpw(){
+const np=$("#np").value,err=$("#pErr");
+if(np.length<6){err.textContent="Password must be at least 6 characters.";return}
+const r=await sb.auth.updateUser({password:np});
+if(r.error){err.textContent=r.error.message;return}
+err.textContent="";$("#np").value="";toast("Password updated");
+},
+async delacc(){
+if(!confirm("Delete your account permanently? This removes your threads and posts too."))return;
+const r=await sb.rpc("delete_my_account");
+if(r.error){toast(r.error.message);return}
+await sb.auth.signOut();me=null;go("home");toast("Account deleted");
+},
+async saveprofile(){
+const bio=$("#bio").value.trim().slice(0,200),sig=$("#sig").value.trim().slice(0,80);
+const r=await sb.from("profiles").update({bio,sig}).eq("id",me.id);
+if(r.error){toast(r.error.message);return}
+me.bio=bio;me.sig=sig;toast("Profile saved");
+},
+async rmpfp(){const r=await sb.from("profiles").update({pfp:""}).eq("id",me.id);if(r.error){toast(r.error.message);return}me.pfp="";render()},
+async setup2fa(){
+const f=await sb.auth.mfa.listFactors();
+for(const x of (f.data&&f.data.all)||[])if(x.status==="unverified")await sb.auth.mfa.unenroll({factorId:x.id});
+const r=await sb.auth.mfa.enroll({factorType:"totp",friendlyName:"Forum "+Date.now()});
+if(r.error){toast(r.error.message);return}
+enroll={id:r.data.id,qr:r.data.totp.qr_code,secret:r.data.totp.secret};render();
+},
+async enable2fa(){
+const err=$("#tsErr");
+const c=await sb.auth.mfa.challenge({factorId:enroll.id});
+if(c.error){err.textContent=c.error.message;return}
+const v=await sb.auth.mfa.verify({factorId:enroll.id,challengeId:c.data.id,code:$("#tsetup").value.trim()});
+if(v.error){err.textContent="That code is not correct. Check your device clock.";return}
+enroll=null;render();toast("2FA enabled");
+},
+async cancel2fa(){if(enroll)await sb.auth.mfa.unenroll({factorId:enroll.id});enroll=null;render()},
+async disable2fa(el){
+if(!confirm("Disable two-factor authentication?"))return;
+const r=await sb.auth.mfa.unenroll({factorId:el.dataset.id});
+if(r.error){toast(r.error.message);return}
+render();toast("2FA disabled");
+},
+async shout(){
+const i=$("#shoutIn"),t=i.value.trim();if(!t||!me)return;
+await db(sb.from("shouts").insert({author_id:me.id,body:t.slice(0,160)}));render();
+},
+async clearshouts(){await db(sb.from("shouts").delete().neq("id",-1));render()},
+async addscript(){
+if(!isAdmin())return;
+const title=$("#sTitle").value.trim(),code=$("#sCode").value;
+if(!title||!code.trim()){toast("Title and code are required");return}
+const row=await db(sb.from("scripts").insert({title,game:$("#sGame").value.trim(),description:$("#sDesc").value.trim(),tags:$("#sTags").value.split(",").map(x=>x.trim().toLowerCase()).filter(Boolean)}).select("id").single());
+const r=await sb.from("script_code").insert({script_id:row.id,code});
+if(r.error){await sb.from("scripts").delete().eq("id",row.id);throw r.error}
+scriptCache=null;render();toast("Script published");
+},
+async addupdate(){
+if(!isAdmin())return;
+const title=$("#uTitle").value.trim(),body=$("#uBody").value.trim();
+if(!title||!body){toast("Title and notes are required");return}
+await db(sb.from("updates").insert({title,body}));render();toast("Update posted");
+},
+togglenew(){showNew=!showNew;render()},
+async newthread(){
+if(!me)return;
+const title=$("#ntTitle").value.trim().slice(0,100),body=$("#ntBody").value.trim().slice(0,5000);
+if(!title||!body){toast("Title and message are required");return}
+const t=await db(sb.from("threads").insert({board:curBoard,title,body,author_id:me.id}).select("id").single());
+showNew=false;curThread=t.id;go("thread");toast("Thread posted");
+},
+async reply(){
+if(!me)return;
+const body=$("#rbody").value.trim().slice(0,5000);
+if(!body){toast("Write something first");return}
+await db(sb.from("posts").insert({thread_id:curThread,author_id:me.id,body}));
+render();toast("Reply posted");
+},
+async pin(){const t=await db(sb.from("threads").select("pinned").eq("id",curThread).single());await db(sb.from("threads").update({pinned:!t.pinned}).eq("id",curThread));render()},
+async lock(){const t=await db(sb.from("threads").select("locked").eq("id",curThread).single());await db(sb.from("threads").update({locked:!t.locked}).eq("id",curThread));render()},
+async delthread(){
+if(!confirm("Delete this thread?"))return;
+await db(sb.from("threads").delete().eq("id",curThread));go("board");toast("Thread deleted");
+},
+async delreply(el){await db(sb.from("posts").delete().eq("id",el.dataset.id));render()}
+};
+
+document.addEventListener("click",e=>{
+const t=e.target.closest("[data-go],[data-act],[data-copy],[data-dl],[data-toggle],[data-tag],[data-del],[data-show],[data-user],[data-board],[data-thread]");
+if(!t)return;
+const d=t.dataset;
+const fail=err=>toast((err&&err.message)||"Something went wrong");
+if(d.board!==undefined){curBoard=d.board;showNew=false;go("board");return}
+if(d.thread!==undefined){curThread=d.thread;sb.rpc("bump_thread",{tid:d.thread}).then(()=>{});go("thread");return}
+if(d.go!==undefined){go(d.go);return}
+if(d.act){if(actions[d.act])Promise.resolve(actions[d.act](t)).catch(fail);return}
+if(d.user!==undefined){viewUser=d.user;go("profile");return}
+if(d.show){const i=document.getElementById(d.show);i.type=i.type==="password"?"text":"password";t.textContent=i.type==="password"?"show":"hide";return}
+if(d.tag!==undefined){filterTag=d.tag;render();return}
+if(d.toggle){
+if(openCode[d.toggle]!==undefined){delete openCode[d.toggle];render();return}
+getCode(d.toggle).then(c=>{openCode[d.toggle]=c;scriptCache=null;render()}).catch(fail);return;
+}
+if(d.copy){getCode(d.copy).then(c=>navigator.clipboard?navigator.clipboard.writeText(c).then(()=>toast("Copied to clipboard"),()=>toast("Copy failed")):toast("Copy not supported")).catch(fail);return}
+if(d.dl){const s=(scriptCache||[]).find(x=>x.id===d.dl);getCode(d.dl).then(c=>{dl(((s&&s.title)||"script").replace(/\W+/g,"_")+".lua",c);toast("Downloaded")}).catch(fail);return}
+if(d.del&&isAdmin()){
+const[tb,id]=d.del.split(":");
+if(tb!=="scripts"&&tb!=="updates")return;
+db(sb.from(tb).delete().eq("id",id)).then(()=>{scriptCache=null;render()}).catch(fail);
+}
+});
+
+document.addEventListener("input",e=>{
+if(e.target.id==="q"){query=e.target.value;const pos=e.target.selectionStart;render().then(()=>{const q=$("#q");if(q){q.focus();q.setSelectionRange(pos,pos)}})}
+if(e.target.id==="rPass"){
+const s=strength(e.target.value),c=["#c21d1d","#c21d1d","#d9822b","#c9b92b","#7bb83a","#2d9a4a"],l=["Too short","Weak","Fair","Good","Strong","Excellent"];
+$("#meter").style.width=(s*20)+"%";$("#meter").style.background=c[s];$("#mtext").textContent=e.target.value?l[s]:"At least 6 characters.";
+}
+});
+document.addEventListener("change",e=>{
+if(e.target.id==="pfpFile"){readPfp(e.target.files[0]);return}
+if(e.target.id==="sort"){sortBy=e.target.value;render().then(()=>{const s=$("#sort");if(s)s.value=sortBy})}
+if(e.target.id==="sFile"){
+const f=e.target.files[0];if(!f)return;
+const r=new FileReader();r.onload=()=>{$("#sCode").value=r.result;if(!$("#sTitle").value)$("#sTitle").value=f.name.replace(/\.[^.]+$/,"")};r.readAsText(f);
+}
+});
+document.addEventListener("keydown",e=>{
+if(e.key!=="Enter")return;
+const id=e.target.id,run=n=>Promise.resolve(actions[n]()).catch(err=>toast(err.message||"Error"));
+if(id==="lEmail"||id==="lPass")run("login");
+if(id==="rUser"||id==="rEmail"||id==="rPass"||id==="rPass2")run("register");
+if(id==="shoutIn")run("shout");
+if(id==="tCode")run("verify2fa");
+});
+
+function tick(){$("#clock").textContent=new Date().toLocaleString()}
+tick();setInterval(tick,30000);
+$("#yr").textContent=new Date().getFullYear();
+
+if(sb){
+sb.auth.onAuthStateChange(ev=>{if(ev==="PASSWORD_RECOVERY"){page="recover";render()}});
+boot();
+}else render();
+</script>
+</body>
+</html>
